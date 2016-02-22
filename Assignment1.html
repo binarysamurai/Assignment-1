@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html ng-app="student">
+<head>
+    <title>Assignment 1</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var student = angular.module('student', []);
+        student.controller('names', function($scope){
+            $scope.name = {
+                firstName: "", lastName: ""
+            };
+            $scope.names = [];
+            //$scope.names.push($scope.name);
+            $scope.fullName = function () {
+                $scope.names.push({ firstName: $scope.name.firstName, lastName: $scope.name.lastName });
+                $scope.name = {
+                    firstName: "", lastName: ""
+                };
+            };
+            $scope.unfullName = function (index) {
+                $scope.names.splice(index, 1);
+                
+            };
+        });
+        
+    </script>
+    <style>
+        body {
+            background-color: #719AF5;
+        }       
+    </style>
+
+
+
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1><b>Students</b></h1>
+    <h3><span>Enter Student's Name:</span></h3>
+    <div ng-controller="names">
+        <form ng-submit="fullName()">
+            <input class="input-sm" type="text" ng-model="name.firstName" placeholder="First Name" required/>
+            <input class="input-sm" type="text" ng-model="name.lastName" placeholder="Last Name" required/>
+            <button type="submit" class="btn btn-success">Add</button>
+        </form>
+        <br />
+        <table class="table table-bordered table-striped table-hover table-condensed">
+            
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+            <tr ng-repeat="d in names track by $index">
+                <td>{{d.firstName}}</td>
+                <td>{{d.lastName}}</td>
+                <td><button ng-click="unfullName($index)">Delete</button></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
